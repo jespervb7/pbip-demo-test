@@ -1,7 +1,7 @@
 table _Measures
 	lineageTag: 397a008b-58f7-4d24-b4c7-ab8fb6859c59
 
-	measure 'Is the data up to date?' =
+	measure '  s the data up to date?' =
 			
 			// This measure determines the header information which will be used in the dashboard. Displaying to the users of the dashboard if there is something wrong
 			// Retrieves the latest refresh date
