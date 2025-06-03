@@ -1,0 +1,68 @@
+table 'DIM country'
+	lineageTag: 1a8d316a-d813-424f-8d10-6ab88ad2c16b
+
+	column 'Country ID'
+		dataType: string
+		isHidden
+		lineageTag: 57a84093-f4a5-47ce-b5d0-1cbbc4b99308
+		summarizeBy: none
+		sourceColumn: Country ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country name'
+		dataType: string
+		lineageTag: 7aa476c9-5ba7-4bea-947d-f92372585328
+		summarizeBy: none
+		sourceColumn: Country name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country code ISO standard'
+		dataType: string
+		lineageTag: ca69952b-a73d-4cb6-a29d-27abe147023f
+		summarizeBy: none
+		sourceColumn: Country code ISO standard
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country code'
+		dataType: string
+		lineageTag: accde237-cb11-445a-8e37-6649dc26d58c
+		summarizeBy: none
+		sourceColumn: Country code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Continent
+		dataType: string
+		lineageTag: 0fa53c45-2fe3-4cd0-aab0-47e30c09c78c
+		summarizeBy: none
+		sourceColumn: Continent
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 04cb4602-1652-4cdc-a1f1-82878a446f87
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DIM country' = m
+		mode: import
+		queryGroup: 'Final layer'
+		source =
+				let
+				    Source = Country,
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"Country_id", "Country ID"}, {"Country_name", "Country name"}, {"Country_code_iso", "Country code ISO standard"}, {"Country_code", "Country code"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

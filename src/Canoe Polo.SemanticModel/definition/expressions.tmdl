@@ -1,0 +1,327 @@
+expression Clubs =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Clubs_Table = Source{[name="Clubs",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Clubs_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Club_id", "Club_full_name", "Club_short_name", "Club_abbreviation", "Country", "Location", "Website"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Club_id", type text}, {"Club_full_name", type text}, {"Club_short_name", type text}, {"Club_abbreviation", type text}, {"Country", type text}, {"Location", type text}, {"Website", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: 05c40242-4023-4654-bd7c-ebb8397875d5
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Division =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Division_Table = Source{[name="Division",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Division_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Division_id", "Division_name", "Division_type", "Division_gender", "Shot_clock_required"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Division_id", type text}, {"Division_name", type text}, {"Division_type", type text}, {"Division_gender", type text}, {"Shot_clock_required", type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","true","Yes",Replacer.ReplaceText,{"Shot_clock_required"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","false","No",Replacer.ReplaceText,{"Shot_clock_required"})
+		in
+		    #"Replaced Value1"
+	lineageTag: a8df0397-cb52-4b20-972c-4e7b5fc1c02e
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Events =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Events_Table = Source{[name="Events",ItemKind="Table"]}[Data]
+		in
+		    Events_Table
+	lineageTag: 7c7af9ea-f828-4b6b-a889-6d59e8f8231c
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Match_day =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Match_day_Table = Source{[name="Match_day",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Match_day_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Match_day_id", "Tournament_id", "Match_day_date", "Location", "Country"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Match_day_id", type text}, {"Tournament_id", type text}, {"Match_day_date", type date}, {"Location", type text}, {"Country", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: b1db28c8-96a0-4888-ae04-29597b5cdd97
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Match_events =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Match_events_Table = Source{[name="Match_events",ItemKind="Table"]}[Data]
+		in
+		    Match_events_Table
+	lineageTag: b8795775-87af-4384-b00b-ec99445e892f
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Matches =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Matches_Table = Source{[name="Matches",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Matches_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Match_id", "Tournament_id", "Division_id", "Match_day_id", "Match_time", "Pitch", "Poule", "First_team", "First_team_goals", "Second_team_goals", "Second_team", "First_referee", "Second_referee", "Jury_duty", "Match_has_being_forfeitted", "Match_stage", "Video_link", "Game_status", "Type_of_registration", "Is_verified_registration"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Match_id", type text}, {"Tournament_id", type text}, {"Division_id", type text}, {"Match_day_id", type text}, {"Match_time", type text}, {"Pitch", Int64.Type}, {"Poule", type text}, {"First_team", type text}, {"First_team_goals", Int64.Type}, {"Second_team_goals", Int64.Type}, {"Second_team", type text}, {"First_referee", type text}, {"Second_referee", type text}, {"Jury_duty", type text}, {"Match_has_being_forfeitted", type text}, {"Match_stage", type text}, {"Video_link", type text}, {"Game_status", type text}, {"Type_of_registration", type text}, {"Is_verified_registration", type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","","-1",Replacer.ReplaceValue,{"First_team"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","","-1",Replacer.ReplaceValue,{"Second_team"}),
+		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","","-1",Replacer.ReplaceValue,{"First_referee"}),
+		    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","","-1",Replacer.ReplaceValue,{"Second_referee"}),
+		    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3","","-1",Replacer.ReplaceValue,{"Jury_duty"}),
+		    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","false","No",Replacer.ReplaceText,{"Match_has_being_forfeitted"}),
+		    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Value5","true","Yes",Replacer.ReplaceText,{"Match_has_being_forfeitted"}),
+		    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6","false","No",Replacer.ReplaceText,{"Is_verified_registration"}),
+		    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Value7","true","Yes",Replacer.ReplaceText,{"Is_verified_registration"})
+		in
+		    #"Replaced Value8"
+	lineageTag: 177e3acb-86bf-4da4-a7e8-1d1753e1c438
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Player =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Player_Table = Source{[name="Player",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Player_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Player_id", "People_id", "Boat_id", "Player_license"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Player_id", type text}, {"People_id", type text}, {"Boat_id", type text}, {"Player_license", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: a0f831fe-c837-482a-98d9-96f75457c5ab
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Boat_brands =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Boat_brands_Table = Source{[name="Boat_brands",ItemKind="Table"]}[Data]
+		in
+		    Boat_brands_Table
+	lineageTag: ab60fdb1-1d28-48a8-a248-a7560e0a662f
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Boats =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Boats_Table = Source{[name="Boats",ItemKind="Table"]}[Data]
+		in
+		    Boats_Table
+	lineageTag: b69bc64f-d77d-47ee-9838-4de9e84bc48a
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression People =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    People_Table = Source{[name="People",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(People_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"People_id", "ICF_Number", "Full_name", "Date_of_birth", "Year_of_birth", "Gender", "Nationality"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"People_id", type text}, {"ICF_Number", type text}, {"Full_name", type text}, {"Date_of_birth", type date}, {"Year_of_birth", Int64.Type}, {"Gender", type text}, {"Nationality", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: 20bfcae2-090f-41e2-9d80-9024b9e7ed04
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Player_registration =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Player_registration_Table = Source{[name="Player_registration",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Player_registration_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Player_registration_id", "Player_id", "Team_registration_id", "Player_pdf_number", "Is_captain"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Player_registration_id", type text}, {"Player_id", type text}, {"Team_registration_id", type text}, {"Player_pdf_number", Int64.Type}, {"Is_captain", type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","false","No",Replacer.ReplaceText,{"Is_captain"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","true","Yes",Replacer.ReplaceText,{"Is_captain"})
+		in
+		    #"Replaced Value1"
+	lineageTag: d966c150-3fc4-4ef6-a38d-fc21b73ee2c4
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Referee =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Referee_Table = Source{[name="Referee",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Referee_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Referee_id", "People_id", "ICF_Grade"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Referee_id", type text}, {"People_id", type text}, {"ICF_Grade", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: bb85e0ca-ae41-49a1-940f-b94324bb04ad
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Staff_registration =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Staff_registration_Table = Source{[name="Staff_registration",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Staff_registration_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Staff_registration_id", "People_id", "Team_registration_id", "Role"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Staff_registration_id", type text}, {"People_id", type text}, {"Team_registration_id", type text}, {"Role", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: f37426fd-db85-4bf6-88a9-a39b800107a6
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Team_registration =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Team_registration_Table = Source{[name="Team_registration",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Team_registration_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Team_registration_id", "Team_id", "Tournament_id", "Team_name"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Team_registration_id", type text}, {"Team_id", type text}, {"Tournament_id", type text}, {"Team_name", type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","","-1",Replacer.ReplaceValue,{"Team_id"})
+		in
+		    #"Replaced Value"
+	lineageTag: e5b699bd-9510-4743-a1a6-d9ff41a674a7
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Teams =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Teams_Table = Source{[name="Teams",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Teams_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Team_id", "Club_id", "Country_id", "Team_name", "Team_abbreviation", "Team_category", "Pdf_colour_first_choice", "Pdf_colour_second_choice", "Is_national_team"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Team_id", type text}, {"Club_id", type text}, {"Team_name", type text}, {"Team_abbreviation", type text}, {"Team_category", type text}, {"Pdf_colour_first_choice", type text}, {"Pdf_colour_second_choice", type text}, {"Is_national_team", type text}, {"Country_id", type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","false","No",Replacer.ReplaceText,{"Is_national_team"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","true","Yes",Replacer.ReplaceText,{"Is_national_team"})
+		in
+		    #"Replaced Value1"
+	lineageTag: a957c51f-5280-43d2-9362-6ea453dabf17
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Tournament =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Tournament_Table = Source{[name="Tournament",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Tournament_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Tournament_id", "Tournament_info_id", "Name", "Edition_website", "Has_all_match_results"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Tournament_id", type text}, {"Tournament_info_id", type text}, {"Name", type text}, {"Edition_website", type text}, {"Has_all_match_results", type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","false","No",Replacer.ReplaceText,{"Has_all_match_results"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","true","Yes",Replacer.ReplaceText,{"Has_all_match_results"})
+		in
+		    #"Replaced Value1"
+	lineageTag: d24cb4d7-550f-4408-a39b-3553be102221
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Tournament_ranking =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Tournament_ranking_Table = Source{[name="Tournament_ranking",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Tournament_ranking_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Ranking_id", "Division_id", "Tournament_id", "Team_registration_id", "Ranking_number"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Ranking_id", type text}, {"Division_id", type text}, {"Tournament_id", type text}, {"Team_registration_id", type text}, {"Ranking_number", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: ea1b3e3a-710d-4a85-9e88-2a00d89ca761
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Tournaments_info =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Tournaments_info_Table = Source{[name="Tournaments_info",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Tournaments_info_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Tournament_info_id", "Tournament_name", "Tournament_abbreviation", "Type_of_event", "Organised_by", "Country_of_origin", "Organised_by_club", "Website_link"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Tournament_info_id", type text}, {"Tournament_name", type text}, {"Tournament_abbreviation", type text}, {"Type_of_event", type text}, {"Organised_by", type text}, {"Country_of_origin", type text}, {"Organised_by_club", type text}, {"Website_link", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: a59a9660-e4ae-44b2-989a-92bd7ac43eac
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression DIM_Referee =
+		let
+		    Source = Referee,
+		    #"Merged Queries" = Table.NestedJoin(Source, {"People_id"}, People, {"People_id"}, "People", JoinKind.LeftOuter),
+		    #"Expanded People" = Table.ExpandTableColumn(#"Merged Queries", "People", {"ICF_Number", "Full_name", "Date_of_birth", "Year_of_birth", "Gender", "Nationality"}, {"ICF_Number", "Full_name", "Date_of_birth", "Year_of_birth", "Gender", "Nationality"}),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Expanded People",{"Referee_id", "ICF_Grade", "ICF_Number", "Full_name", "Date_of_birth", "Year_of_birth", "Gender", "Nationality"}),
+		    #"Reordered Columns" = Table.ReorderColumns(#"Removed Other Columns",{"Referee_id", "Full_name", "ICF_Grade", "ICF_Number", "Date_of_birth", "Year_of_birth", "Gender", "Nationality"}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Referee_id", "Referee ID"}, {"Full_name", "Full name"}, {"ICF_Grade", "ICF Grade"}, {"ICF_Number", "ICF Number"}, {"Date_of_birth", "Date of Birth"}, {"Year_of_birth", "Year of Birth"}})
+		in
+		    #"Renamed Columns"
+	lineageTag: 4497072a-8070-4b08-824c-9928dfd9c001
+	queryGroup: 'Layer 1'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Country =
+		let
+		    Source = GoogleSheets.Contents("https://docs.google.com/spreadsheets/d/1_6MZ4eVENFmRrRxwkf3yApNZHERcXcZiO55u7rpzFIo/edit?gid=1670458397#gid=1670458397"),
+		    Country_Table = Source{[name="Country",ItemKind="Table"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Country_Table, [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Country_id", "Country_name", "Country_code_iso", "Country_code", "Continent", "Region"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Country_id", type text}, {"Country_name", type text}, {"Country_code_iso", type text}, {"Country_code", type text}, {"Continent", type text}, {"Region", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: bb64d1a8-27da-4868-8ad7-f962b6a1fabc
+	queryGroup: 'Sheets on the google sheet'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

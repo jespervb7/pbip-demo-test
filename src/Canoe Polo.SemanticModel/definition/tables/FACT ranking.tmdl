@@ -1,0 +1,105 @@
+table 'FACT ranking'
+	lineageTag: 89024378-4229-4cab-8010-786adb0e365a
+
+	column 'Division ID'
+		dataType: string
+		isHidden
+		lineageTag: 3dffc03f-8eab-4127-a8fe-f8a6c57dcb46
+		summarizeBy: none
+		sourceColumn: Division ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tournament ID'
+		dataType: string
+		isHidden
+		lineageTag: 4824b86d-ee51-4a73-95fd-29e17cc8c797
+		summarizeBy: none
+		sourceColumn: Tournament ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team ID'
+		dataType: string
+		isHidden
+		lineageTag: 76b8c88c-1f91-42e2-8cde-66c4da655fb5
+		summarizeBy: none
+		sourceColumn: Team ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Club ID'
+		dataType: string
+		isHidden
+		lineageTag: f3da09b8-2675-4b47-be6c-4da2df1dd466
+		summarizeBy: none
+		sourceColumn: Club ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ranking number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ffd82cb-aa29-4c09-9786-6f99c1e3b110
+		summarizeBy: sum
+		sourceColumn: Ranking number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Player ID'
+		dataType: string
+		isHidden
+		lineageTag: 23a648c2-2691-4b74-a732-a1303a6af8ca
+		summarizeBy: none
+		sourceColumn: Player ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country ID'
+		dataType: string
+		isHidden
+		lineageTag: 8a508230-a227-4a39-9c0b-f4b1777e76cf
+		summarizeBy: none
+		sourceColumn: Country ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'FACT ranking' = m
+		mode: import
+		queryGroup: 'Final layer'
+		source =
+				let
+				    Source = Tournament_ranking,
+				    #"Merged Queries" = Table.NestedJoin(Source, {"Team_registration_id"}, Team_registration, {"Team_registration_id"}, "Team_registration", JoinKind.LeftOuter),
+				    #"Expanded Team_registration" = Table.ExpandTableColumn(#"Merged Queries", "Team_registration", {"Team_id"}, {"Team_id"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Expanded Team_registration", {"Team_id"}, Teams, {"Team_id"}, "Teams", JoinKind.LeftOuter),
+				    #"Expanded Teams" = Table.ExpandTableColumn(#"Merged Queries1", "Teams", {"Club_id", "Country_id"}, {"Club_id", "Country_id"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Expanded Teams", {"Team_registration_id"}, Player_registration, {"Team_registration_id"}, "Player_registration", JoinKind.LeftOuter),
+				    #"Expanded Player_registration" = Table.ExpandTableColumn(#"Merged Queries2", "Player_registration", {"Player_id"}, {"Player_id"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Expanded Player_registration","","-1",Replacer.ReplaceValue,{"Club_id"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value",null,"-1",Replacer.ReplaceValue,{"Club_id"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1",null,"-1",Replacer.ReplaceValue,{"Player_id"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Replaced Value2",{"Division_id", "Tournament_id", "Ranking_number", "Team_id", "Club_id", "Country_id", "Player_id"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Other Columns",{"Division_id", "Tournament_id", "Team_id", "Club_id", "Player_id", "Ranking_number"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Division_id", "Division ID"}, {"Tournament_id", "Tournament ID"}, {"Team_id", "Team ID"}, {"Club_id", "Club ID"}, {"Player_id", "Player ID"}, {"Ranking_number", "Ranking number"}, {"Country_id", "Country ID"}}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Renamed Columns",null,"-1",Replacer.ReplaceValue,{"Country ID"}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3","","-1",Replacer.ReplaceValue,{"Country ID"})
+				in
+				    #"Replaced Value4"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

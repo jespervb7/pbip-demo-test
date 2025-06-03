@@ -1,0 +1,84 @@
+table 'DIM first referee'
+	lineageTag: 1eb0a8c5-71a2-424f-88e8-f9c6c00706f2
+
+	column 'Referee ID'
+		dataType: string
+		lineageTag: fcff5627-582e-4eab-8636-5fcb7e76e2a5
+		summarizeBy: none
+		sourceColumn: Referee ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full name'
+		dataType: string
+		lineageTag: a0b4f5e7-b48d-460a-a35e-1abe1047c291
+		summarizeBy: none
+		sourceColumn: Full name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ICF Grade'
+		dataType: string
+		lineageTag: adcda1f7-0a34-4033-8b53-d9f4e1de66ee
+		summarizeBy: none
+		sourceColumn: ICF Grade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ICF Number'
+		dataType: string
+		lineageTag: fae3fb34-a000-433e-9f57-3d5a178899b6
+		summarizeBy: none
+		sourceColumn: ICF Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date of Birth'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ca37554a-e5c0-4cad-a772-309cde649e59
+		summarizeBy: none
+		sourceColumn: Date of Birth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Year of Birth'
+		dataType: int64
+		formatString: 0
+		lineageTag: 43792ef6-701b-4dac-b6e4-ca4b25b37edc
+		summarizeBy: sum
+		sourceColumn: Year of Birth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: badfa2fd-bf03-4c86-881f-f574a01882de
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nationality
+		dataType: string
+		lineageTag: 79ae643e-d4eb-4e9b-9a3a-d624522e8159
+		summarizeBy: none
+		sourceColumn: Nationality
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DIM first referee' = m
+		mode: import
+		queryGroup: 'Final layer'
+		source =
+				let
+				    Source = DIM_Referee
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

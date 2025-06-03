@@ -1,0 +1,24 @@
+relationship 61d68eb8-0160-0d5c-364b-d5475bc3f266
+	fromColumn: 'FACT ranking'.'Team ID'
+	toColumn: 'DIM teams'.'Team ID'
+
+relationship 159edb16-3177-7407-3bd0-59b9232c77fc
+	fromColumn: 'FACT ranking'.'Division ID'
+	toColumn: 'DIM division'.'Division ID'
+
+relationship 49b31009-ae83-22a9-fc37-dfa672f14949
+	fromColumn: 'FACT ranking'.'Country ID'
+	toColumn: 'DIM country'.'Country ID'
+
+relationship ea509ee7-697a-a88f-2d77-47ba9dbf4d2a
+	fromColumn: 'FACT ranking'.'Club ID'
+	toColumn: 'DIM club'.'Club ID'
+
+relationship e04bb340-fcc0-294f-92ef-6cc681263729
+	fromColumn: 'FACT ranking'.'Player ID'
+	toColumn: 'DIM player'.'Player ID'
+
+relationship 5124fcfa-d2c3-9944-0fd5-d70533e33f9c
+	fromColumn: 'FACT ranking'.'Tournament ID'
+	toColumn: 'DIM tournament'.'Tournament ID'
+

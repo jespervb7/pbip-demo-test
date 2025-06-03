@@ -1,0 +1,77 @@
+table 'DIM teams'
+	lineageTag: 44f6f13e-41b7-45da-a142-904f82565d08
+
+	column 'Team ID'
+		dataType: string
+		isHidden
+		lineageTag: 4ea50d28-b385-4e7f-aebf-335b3b286ac8
+		summarizeBy: none
+		sourceColumn: Team ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team name'
+		dataType: string
+		lineageTag: a2161431-38c3-4a60-8605-5ec379b5a4e5
+		summarizeBy: none
+		sourceColumn: Team name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team abbreviation'
+		dataType: string
+		lineageTag: 55a4a730-7a1d-43ca-8112-a8cebcaa6b8a
+		summarizeBy: none
+		sourceColumn: Team abbreviation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: e835601a-82ff-4ea0-a971-88c15b127f1e
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PDF color first choice'
+		dataType: string
+		lineageTag: 8d2aa934-93c6-47bc-accb-451fb6a8a2c9
+		summarizeBy: none
+		sourceColumn: PDF color first choice
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PDF color second choice'
+		dataType: string
+		lineageTag: f2d72e07-8ccf-4b4c-99eb-5ca565ab885f
+		summarizeBy: none
+		sourceColumn: PDF color second choice
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is national team'
+		dataType: string
+		lineageTag: eab465c8-163e-4b2e-89c3-0c2b00ff3575
+		summarizeBy: none
+		sourceColumn: Is national team
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DIM teams' = m
+		mode: import
+		queryGroup: 'Final layer'
+		source =
+				let
+				    Source = Teams,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Team_id", "Team_name", "Team_abbreviation", "Team_category", "Pdf_colour_first_choice", "Pdf_colour_second_choice", "Is_national_team"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Team_id", "Team ID"}, {"Team_name", "Team name"}, {"Team_abbreviation", "Team abbreviation"}, {"Team_category", "Category"}, {"Pdf_colour_first_choice", "PDF color first choice"}, {"Pdf_colour_second_choice", "PDF color second choice"}, {"Is_national_team", "Is national team"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

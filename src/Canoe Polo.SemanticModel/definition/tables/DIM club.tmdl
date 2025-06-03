@@ -1,0 +1,76 @@
+table 'DIM club'
+	lineageTag: 11638164-475a-46b0-940c-5802cc07fd37
+
+	column 'Club ID'
+		dataType: string
+		isHidden
+		lineageTag: d8a2f173-2ea1-4cc0-b52c-c0d0b7b621ad
+		summarizeBy: none
+		sourceColumn: Club ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Club full name'
+		dataType: string
+		lineageTag: c8fc9756-0b94-4f45-9e74-ec308a90eed8
+		summarizeBy: none
+		sourceColumn: Club full name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Club short name'
+		dataType: string
+		lineageTag: 2d411c54-7907-48a7-a3f6-87ef04416ce6
+		summarizeBy: none
+		sourceColumn: Club short name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Club abbreviation'
+		dataType: string
+		lineageTag: ba03adc8-589e-4468-8ee8-8dd88186889f
+		summarizeBy: none
+		sourceColumn: Club abbreviation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 11b27bf5-82a8-4015-a39d-98947e75f095
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: ca5fe7ee-3c14-4ee1-ba81-97f32c57ca3e
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Website
+		dataType: string
+		lineageTag: ac815b61-d315-430c-bc34-1d1228d30d0d
+		summarizeBy: none
+		sourceColumn: Website
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DIM club' = m
+		mode: import
+		queryGroup: 'Final layer'
+		source =
+				let
+				    Source = Clubs,
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"Club_id", "Club ID"}, {"Club_full_name", "Club full name"}, {"Club_short_name", "Club short name"}, {"Club_abbreviation", "Club abbreviation"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
