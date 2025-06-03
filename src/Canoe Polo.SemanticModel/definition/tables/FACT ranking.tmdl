@@ -25,6 +25,8 @@ table 'FACT ranking'
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
+
 	column 'Team ID'
 		dataType: string
 		isHidden
@@ -37,6 +39,8 @@ table 'FACT ranking'
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
+
 	column 'Club ID'
 		dataType: string
 		isHidden
@@ -48,6 +52,8 @@ table 'FACT ranking'
 		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
 
 	column 'Ranking number'
 		dataType: int64
@@ -72,6 +78,8 @@ table 'FACT ranking'
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
+
 	column 'Country ID'
 		dataType: string
 		isHidden
@@ -83,6 +91,8 @@ table 'FACT ranking'
 		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
 
 	partition 'FACT ranking' = m
 		mode: import
