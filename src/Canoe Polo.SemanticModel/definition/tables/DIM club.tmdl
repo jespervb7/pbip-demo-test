@@ -4,6 +4,8 @@ table 'DIM club'
 	column 'Club ID'
 		dataType: string
 		isHidden
+		isKey
+		isAvailableInMdx: false
 		lineageTag: d8a2f173-2ea1-4cc0-b52c-c0d0b7b621ad
 		summarizeBy: none
 		sourceColumn: Club ID

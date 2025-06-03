@@ -4,6 +4,8 @@ table 'DIM division'
 	column 'Division ID'
 		dataType: string
 		isHidden
+		isKey
+		isAvailableInMdx: false
 		lineageTag: 9f565bde-734c-4b05-8490-fed042238fef
 		summarizeBy: none
 		sourceColumn: Division ID

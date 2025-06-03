@@ -4,6 +4,8 @@ table 'DIM country'
 	column 'Country ID'
 		dataType: string
 		isHidden
+		isKey
+		isAvailableInMdx: false
 		lineageTag: 57a84093-f4a5-47ce-b5d0-1cbbc4b99308
 		summarizeBy: none
 		sourceColumn: Country ID
