@@ -58,6 +58,7 @@ table 'FACT ranking'
 	column 'Ranking number'
 		dataType: int64
 		formatString: 0
+		isAvailableInMdx: false
 		lineageTag: 3ffd82cb-aa29-4c09-9786-6f99c1e3b110
 		summarizeBy: sum
 		sourceColumn: Ranking number
