@@ -58,6 +58,8 @@ table 'FACT ranking'
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["NUMERIC_COLUMN_SUMMARIZE_BY"]}
+
 	column 'Player ID'
 		dataType: string
 		isHidden
