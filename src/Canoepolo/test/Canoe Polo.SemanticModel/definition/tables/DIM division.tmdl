@@ -1,0 +1,62 @@
+table 'DIM division'
+	lineageTag: 5193193e-8f5c-4652-8b4a-bd54821fb43a
+
+	column 'Division ID'
+		dataType: string
+		isHidden
+		isKey
+		isAvailableInMdx: false
+		lineageTag: 9f565bde-734c-4b05-8490-fed042238fef
+		summarizeBy: none
+		sourceColumn: Division ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Division name'
+		dataType: string
+		lineageTag: 0eb0ecfd-f539-4fde-941d-6a63a4e3ce97
+		summarizeBy: none
+		sourceColumn: Division name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Division type'
+		dataType: string
+		lineageTag: 27a3f423-d163-4f77-b860-085fca44d21a
+		summarizeBy: none
+		sourceColumn: Division type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Division gender'
+		dataType: string
+		lineageTag: b011631a-6d78-4a7d-8292-02d6cb64275b
+		summarizeBy: none
+		sourceColumn: Division gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is shotclock required'
+		dataType: string
+		lineageTag: 72b51ab8-3ad7-4e35-9d5c-94f5e8e8032b
+		summarizeBy: none
+		sourceColumn: Is shotclock required
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DIM division' = m
+		mode: import
+		queryGroup: 'Final layer'
+		source =
+				let
+				    Source = Division,
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"Division_id", "Division ID"}, {"Division_name", "Division name"}, {"Division_type", "Division type"}, {"Division_gender", "Division gender"}, {"Shot_clock_required", "Is shotclock required"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

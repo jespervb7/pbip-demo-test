@@ -1,0 +1,94 @@
+table 'DIM player'
+	lineageTag: bf5cd7c8-b7b2-4388-b4fc-2c31739e0c28
+
+	column 'Player ID'
+		dataType: string
+		isHidden
+		isKey
+		isAvailableInMdx: false
+		lineageTag: b2db2b9f-5e7a-4232-a697-ac1aee57a1e1
+		summarizeBy: none
+		sourceColumn: Player ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Player license'
+		dataType: string
+		lineageTag: 44691c76-b283-48ee-997f-c8cc06c65a98
+		summarizeBy: none
+		sourceColumn: Player license
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ICF Number'
+		dataType: string
+		lineageTag: b7611a52-67d5-49a6-af94-63177f562b13
+		summarizeBy: none
+		sourceColumn: ICF Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full name'
+		dataType: string
+		lineageTag: 72cbe6e3-40ad-4e73-9396-c6ff00015318
+		summarizeBy: none
+		sourceColumn: Full name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date of birth'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 50ec4576-c431-48d3-989b-69d680d8233c
+		summarizeBy: none
+		sourceColumn: Date of birth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Year of birth'
+		dataType: int64
+		formatString: 0
+		lineageTag: 49e0f826-c30c-4e4b-8458-04d3c11d8c8b
+		summarizeBy: none
+		sourceColumn: Year of birth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: aadf49c5-4899-4d06-a719-755c769d4d9c
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nationality
+		dataType: string
+		lineageTag: d64735ff-30cc-4c4f-8677-96e2107d96d0
+		summarizeBy: none
+		sourceColumn: Nationality
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DIM player' = m
+		mode: import
+		queryGroup: 'Final layer'
+		source =
+				let
+				    Source = Player,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Player_id] <> "")),
+				    #"Merged Queries" = Table.NestedJoin(#"Filtered Rows", {"People_id"}, People, {"People_id"}, "People", JoinKind.LeftOuter),
+				    #"Expanded People" = Table.ExpandTableColumn(#"Merged Queries", "People", {"ICF_Number", "Full_name", "Date_of_birth", "Year_of_birth", "Gender", "Nationality"}, {"ICF_Number", "Full_name", "Date_of_birth", "Year_of_birth", "Gender", "Nationality"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Expanded People",{"Player_id", "Player_license", "ICF_Number", "Full_name", "Date_of_birth", "Year_of_birth", "Gender", "Nationality"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Player_id", "Player ID"}, {"Player_license", "Player license"}, {"ICF_Number", "ICF Number"}, {"Full_name", "Full name"}, {"Date_of_birth", "Date of birth"}, {"Year_of_birth", "Year of birth"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

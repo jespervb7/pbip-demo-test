@@ -181,6 +181,16 @@
     "CompatibilityLevel": 1200
   },
   {
+    "ID": "REDUCE_USAGE_OF_CALCULATED_TABLES",
+    "Name": "[Performance] Reduce usage of calculated tables",
+    "Category": "Performance",
+    "Description": "Migrate calculated table logic to your data warehouse. Reliance on calculated tables will lead to technical debt and potential misalignments if you have multiple models on your platform.",
+    "Severity": 2,
+    "Scope": "CalculatedTable",
+    "Expression": "1=1",
+    "CompatibilityLevel": 1200
+  },
+  {
     "ID": "REMOVE_REDUNDANT_COLUMNS_IN_RELATED_TABLES",
     "Name": "[Performance] Remove redundant columns in related tables",
     "Category": "Performance",
@@ -395,7 +405,7 @@
     "Name": "[Error Prevention] Relationship columns should be of the same data type",
     "Category": "Error Prevention",
     "Description": "Columns used in a relationship should be of the same data type. Ideally, they will be of integer data type (see the related rule '[Formatting] Relationship columns should be of integer data type'). Having columns within a relationship which are of different data types may lead to various issues.",
-    "Severity": 2,
+    "Severity": 3,
     "Scope": "Relationship",
     "Expression": "FromColumn.DataType != ToColumn.DataType",
     "CompatibilityLevel": 1200
@@ -430,7 +440,7 @@
     "Severity": 3,
     "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
     "Expression": "IsAvailableInMDX = false\r\n\r\nand\r\n(\r\nUsedInSortBy.Any()\r\nor\r\nUsedInHierarchies.Any()\r\nor\r\nUsedInVariations.Any()\r\nor\r\nSortByColumn != null\r\n)",
-    "FixExpression": "IsAvailableInMDX = true",
+	"FixExpression": "IsAvailableInMDX = true",
     "CompatibilityLevel": 1200
   },
   {
@@ -477,6 +487,17 @@
     "CompatibilityLevel": 1200
   },
   {
+    "ID": "REMOVE_ROLES_WITH_NO_MEMBERS",
+    "Name": "[Maintenance] Remove roles with no members",
+    "Category": "Maintenance",
+    "Description": "May remove roles with no members.",
+    "Severity": 1,
+    "Scope": "ModelRole",
+    "Expression": "Members.Count() == 0",
+    "FixExpression": "Delete()",
+    "CompatibilityLevel": 1200
+  },
+  {
     "ID": "ENSURE_TABLES_HAVE_RELATIONSHIPS",
     "Name": "[Maintenance] Ensure tables have relationships",
     "Category": "Maintenance",
@@ -484,6 +505,16 @@
     "Severity": 1,
     "Scope": "Table, CalculatedTable",
     "Expression": "UsedInRelationships.Count() == 0",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "OBJECTS_WITH_NO_DESCRIPTION",
+    "Name": "[Maintenance] Visible objects with no description",
+    "Category": "Maintenance",
+    "Description": "Add descriptions to objects. These descriptions are shown on hover within the Field List in Power BI Desktop. Additionally, you can leverage these descriptions to create an automated data dictionary (see link below).\r\nReference: https://www.elegantbi.com/post/datadictionary",
+    "Severity": 1,
+    "Scope": "Table, Measure, DataColumn, CalculatedColumn, CalculatedTable, CalculatedTableColumn, CalculationGroup",
+    "Expression": "string.IsNullOrWhitespace(Description)\r\nand\r\nIsHidden == false",
     "CompatibilityLevel": 1200
   },
   {
@@ -585,9 +616,20 @@
     "Name": "[Formatting] Provide format string for measures",
     "Category": "Formatting",
     "Description": "Visible measures should have their format string property assigned",
-    "Severity": 2,
+    "Severity": 3,
     "Scope": "Measure",
     "Expression": "not IsHidden \r\nand not Table.IsHidden \r\nand string.IsNullOrWhitespace(FormatString)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "NUMERIC_COLUMN_SUMMARIZE_BY",
+    "Name": "[Formatting] Do not summarize numeric columns",
+    "Category": "Formatting",
+    "Description": "Numeric columns (integer, decimal, double) should have their SummarizeBy property set to \"None\" to avoid accidental summation in Power BI (create measures instead).",
+    "Severity": 3,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "(\r\nDataType = \"Int64\"\r\nor \r\nDataType=\"Decimal\" \r\nor \r\nDataType=\"Double\"\r\n)\n\r\nand \r\nSummarizeBy <> \"None\"\r\n\nand not (IsHidden or Table.IsHidden)",
+    "FixExpression": "SummarizeBy = AggregateFunction.None",
     "CompatibilityLevel": 1200
   },
   {
@@ -608,6 +650,16 @@
     "Scope": "Measure",
     "Expression": "not FormatString.Contains(\"$\") and not FormatString.Contains(\"%\") and not (FormatString = \"#,0\" or FormatString = \"#,0.0\")",
     "FixExpression": "FormatString = \"#,0\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE",
+    "Name": "[Formatting] Relationship columns should be of integer data type",
+    "Category": "Formatting",
+    "Description": "It is a best practice for relationship columns to be of integer data type. This applies not only to data warehousing but data modeling as well.",
+    "Severity": 1,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "UsedInRelationships.Any()\n\nand \n\nDataType != DataType.Int64",
     "CompatibilityLevel": 1200
   },
   {

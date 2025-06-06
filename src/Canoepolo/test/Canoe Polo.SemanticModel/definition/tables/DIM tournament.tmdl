@@ -1,0 +1,124 @@
+table 'DIM tournament'
+	lineageTag: 11e385ab-44e8-41d2-acb7-ea64d340a053
+
+	column 'Tournament ID'
+		dataType: string
+		isHidden
+		isKey
+		isAvailableInMdx: false
+		lineageTag: 6a25e81d-3216-436c-91a2-6af6a1db4a47
+		summarizeBy: none
+		sourceColumn: Tournament ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tournament name edition'
+		dataType: string
+		lineageTag: 7801e47c-8628-413c-b1b9-e9dbaf0998c6
+		summarizeBy: none
+		sourceColumn: Tournament name edition
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Edition website'
+		dataType: string
+		lineageTag: ea4f1b15-8f5a-424e-864a-f382f796bbc5
+		summarizeBy: none
+		sourceColumn: Edition website
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Has all match results'
+		dataType: string
+		lineageTag: 41aceafa-6cca-490e-9d54-51e7850538e5
+		summarizeBy: none
+		sourceColumn: Has all match results
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tournament name'
+		dataType: string
+		lineageTag: 464a1e4e-59aa-43e0-aa97-db32eef72b86
+		summarizeBy: none
+		sourceColumn: Tournament name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tournament abbreviation'
+		dataType: string
+		lineageTag: f63cdb2a-5468-402d-abee-72ba6ddf919d
+		summarizeBy: none
+		sourceColumn: Tournament abbreviation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Type of event'
+		dataType: string
+		lineageTag: 56cc0038-6932-4753-a67f-d7b2eb29ab56
+		summarizeBy: none
+		sourceColumn: Type of event
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Organised by'
+		dataType: string
+		lineageTag: aa2fe298-7cca-4235-8192-68261883922f
+		summarizeBy: none
+		sourceColumn: Organised by
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country of origin'
+		dataType: string
+		lineageTag: e2976182-c006-4dfa-987b-5e36cc3abc9d
+		summarizeBy: none
+		sourceColumn: Country of origin
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Organised by club'
+		dataType: string
+		lineageTag: 5d4f5075-e373-4ac7-ad48-633f85b182bf
+		summarizeBy: none
+		sourceColumn: Organised by club
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Website link'
+		dataType: string
+		lineageTag: 9f03abe2-2767-4422-9a9a-401512429cf2
+		summarizeBy: none
+		sourceColumn: Website link
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Tournament name Hierarchy'
+		lineageTag: 9b7aa6e0-aa7f-4bab-a6dd-80fc315e6986
+
+		level 'Tournament name'
+			lineageTag: 8b4be3df-67fb-4064-8214-cdc619c38f1d
+			column: 'Tournament name'
+
+		level 'Tournament name edition'
+			lineageTag: eec9ace8-09c8-4310-b557-a2bb4dfa5479
+			column: 'Tournament name edition'
+
+	partition 'DIM tournament' = m
+		mode: import
+		queryGroup: 'Final layer'
+		source =
+				let
+				    Source = Tournament,
+				    #"Merged Queries" = Table.NestedJoin(Source, {"Tournament_info_id"}, Tournaments_info, {"Tournament_info_id"}, "Tournaments_info", JoinKind.LeftOuter),
+				    #"Expanded Tournaments_info" = Table.ExpandTableColumn(#"Merged Queries", "Tournaments_info", {"Tournament_name", "Tournament_abbreviation", "Type_of_event", "Organised_by", "Country_of_origin", "Organised_by_club", "Website_link"}, {"Tournament_name", "Tournament_abbreviation", "Type_of_event", "Organised_by", "Country_of_origin", "Organised_by_club", "Website_link"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Expanded Tournaments_info",{"Tournament_id", "Name", "Edition_website", "Has_all_match_results", "Tournament_name", "Tournament_abbreviation", "Type_of_event", "Organised_by", "Country_of_origin", "Organised_by_club", "Website_link"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Tournament_id", "Tournament ID"}, {"Edition_website", "Edition website"}, {"Has_all_match_results", "Has all match results"}, {"Tournament_name", "Tournament name"}, {"Tournament_abbreviation", "Tournament abbreviation"}, {"Type_of_event", "Type of event"}, {"Organised_by", "Organised by"}, {"Country_of_origin", "Country of origin"}, {"Organised_by_club", "Organised by club"}, {"Website_link", "Website link"}, {"Name", "Tournament name edition"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
