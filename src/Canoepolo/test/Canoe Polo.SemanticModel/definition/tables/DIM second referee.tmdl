@@ -53,8 +53,6 @@ table 'DIM second referee'
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["NUMERIC_COLUMN_SUMMARIZE_BY"]}
-
 	column Gender
 		dataType: string
 		lineageTag: f5d49da2-1c90-4010-b083-650059d11e85

@@ -4,7 +4,6 @@ table 'FACT ranking'
 	column 'Division ID'
 		dataType: string
 		isHidden
-		isAvailableInMdx: false
 		lineageTag: 3dffc03f-8eab-4127-a8fe-f8a6c57dcb46
 		summarizeBy: none
 		sourceColumn: Division ID
@@ -16,7 +15,6 @@ table 'FACT ranking'
 	column 'Tournament ID'
 		dataType: string
 		isHidden
-		isAvailableInMdx: false
 		lineageTag: 4824b86d-ee51-4a73-95fd-29e17cc8c797
 		summarizeBy: none
 		sourceColumn: Tournament ID
@@ -25,12 +23,9 @@ table 'FACT ranking'
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
-
 	column 'Team ID'
 		dataType: string
 		isHidden
-		isAvailableInMdx: false
 		lineageTag: 76b8c88c-1f91-42e2-8cde-66c4da655fb5
 		summarizeBy: none
 		sourceColumn: Team ID
@@ -39,12 +34,9 @@ table 'FACT ranking'
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
-
 	column 'Club ID'
 		dataType: string
 		isHidden
-		isAvailableInMdx: false
 		lineageTag: f3da09b8-2675-4b47-be6c-4da2df1dd466
 		summarizeBy: none
 		sourceColumn: Club ID
@@ -53,24 +45,18 @@ table 'FACT ranking'
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
-
 	column 'Ranking number'
 		dataType: int64
 		formatString: 0
-		isAvailableInMdx: false
 		lineageTag: 3ffd82cb-aa29-4c09-9786-6f99c1e3b110
 		summarizeBy: sum
 		sourceColumn: Ranking number
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["NUMERIC_COLUMN_SUMMARIZE_BY"]}
-
 	column 'Player ID'
 		dataType: string
 		isHidden
-		isAvailableInMdx: false
 		lineageTag: 23a648c2-2691-4b74-a732-a1303a6af8ca
 		summarizeBy: none
 		sourceColumn: Player ID
@@ -79,12 +65,9 @@ table 'FACT ranking'
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
-
 	column 'Country ID'
 		dataType: string
 		isHidden
-		isAvailableInMdx: false
 		lineageTag: 8a508230-a227-4a39-9c0b-f4b1777e76cf
 		summarizeBy: none
 		sourceColumn: Country ID
@@ -92,8 +75,6 @@ table 'FACT ranking'
 		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
 
 	partition 'FACT ranking' = m
 		mode: import

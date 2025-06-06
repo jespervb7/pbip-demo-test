@@ -1,32 +1,6 @@
 table _Measures
 	lineageTag: 397a008b-58f7-4d24-b4c7-ab8fb6859c59
 
-	measure '  s the data up to date?' =
-			
-			// This measure determines the header information which will be used in the dashboard. Displaying to the users of the dashboard if there is something wrong
-			// Retrieves the latest refresh date
-			VAR LatestRefreshDate =
-			    MAX ( 'Last refresh'[Datum laatste verversing] ) // Gets the latest date out of the fact table, this assumes your fact table doesn't contain dates that are in the future.
-			VAR LastDateInFct =
-			    CALCULATE ( MAX ( DIM_date[Date] ), ALL ( DIM_date[Date] ) ) // Checks if the data is refreshed compared to the fact table
-			VAR DataIsUpToDate =
-			    IF ( LastDateInFct >= TODAY () - 1, "Yes", "No" ) // Checks if the dashboard is refreshed in the Power BI Service.
-			VAR DashboardIsRefreshed =
-			    IF ( LatestRefreshDate = TODAY (), "Yes", "No" ) // Final checks for the status
-			VAR DashboardRefreshStatus =
-			    SWITCH (
-			        TRUE (),
-			        DashboardIsRefreshed = "No", "⚠ Dashboard has problems with refreshing ⚠",
-			        DataIsUpToDate = "No",
-			            "⚠ Dashboard has refreshed, but there is some error with the data on the background ⚠",
-			        DataIsUpToDate = "Yes", "Dashboard is up to date"
-			    )
-			RETURN
-			    DashboardRefreshStatus
-		formatString: #,0
-		displayFolder: Technical measures for end-users
-		lineageTag: 9f8aaa55-1638-4e78-a3f1-d77a957be221
-
 	column Column1
 		dataType: string
 		isHidden

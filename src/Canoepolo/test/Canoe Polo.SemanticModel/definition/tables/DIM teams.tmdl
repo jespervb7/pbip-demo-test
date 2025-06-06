@@ -4,8 +4,6 @@ table 'DIM teams'
 	column 'Team ID'
 		dataType: string
 		isHidden
-		isKey
-		isAvailableInMdx: false
 		lineageTag: 4ea50d28-b385-4e7f-aebf-335b3b286ac8
 		summarizeBy: none
 		sourceColumn: Team ID

@@ -4,8 +4,6 @@ table 'DIM country'
 	column 'Country ID'
 		dataType: string
 		isHidden
-		isKey
-		isAvailableInMdx: false
 		lineageTag: 57a84093-f4a5-47ce-b5d0-1cbbc4b99308
 		summarizeBy: none
 		sourceColumn: Country ID
@@ -13,8 +11,6 @@ table 'DIM country'
 		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["RELATIONSHIP_COLUMNS_SHOULD_BE_OF_INTEGER_DATA_TYPE"]}
 
 	column 'Country name'
 		dataType: string

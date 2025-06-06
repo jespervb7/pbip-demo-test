@@ -23,13 +23,11 @@ annotation PBI_QueryOrder = ["_Measures","Last refresh","Clubs","Division","Even
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBIDesktopVersion = 2.143.1204.0 (25.05)+23c84aace645781dd62b8a26eb0418c7e6a84b72
+annotation PBIDesktopVersion = 2.143.1378.0 (25.05)+4e1de9c957866bc5336e0d250838314aa54ff3a8
 
 annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
 
 annotation __TEdtr = 1
-
-annotation BestPracticeAnalyzer_IgnoreRules = {"RuleIDs":["OBJECTS_WITH_NO_DESCRIPTION","MINIMIZE_POWER_QUERY_TRANSFORMATIONS","ENSURE_TABLES_HAVE_RELATIONSHIPS","DATECOLUMN_FORMATSTRING","ADD_DATA_CATEGORY_FOR_COLUMNS","OBJECTS_SHOULD_NOT_START_OR_END_WITH_A_SPACE"]}
 
 ref table _Measures
 ref table 'Last refresh'
