@@ -28,4 +28,4 @@ jobs:
           uses: actions/checkout@v4
 
         - name: BPA Semantic Models
-          run: .\.bpa\bpa.ps1 -src @("./src/**.SemanticModel")
+          run: .\.bpa\bpa.ps1 -src @("./src/*/*.SemanticModel")

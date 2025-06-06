@@ -76,7 +76,7 @@ foreach ($srcPath in $src) {
         continue
     }
 
-    $itemsFolders = Get-ChildItem  -Path $srcPath -recurse -include ("**.pbidataset", "**.pbism", "**.pbir") | Sort-Object Name -Descending
+    $itemsFolders = Get-ChildItem  -Path $srcPath -recurse -include ("*.pbidataset", "*.pbism", "*.pbir") | Sort-Object Name -Descending
 
     foreach ($itemFile in $itemsFolders) {
         
