@@ -4,6 +4,8 @@ table 'DIM tournament'
 	column 'Tournament ID'
 		dataType: string
 		isHidden
+		isKey
+		isAvailableInMdx: false
 		lineageTag: 6a25e81d-3216-436c-91a2-6af6a1db4a47
 		summarizeBy: none
 		sourceColumn: Tournament ID

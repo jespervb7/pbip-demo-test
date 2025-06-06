@@ -48,7 +48,7 @@ table 'DIM second referee'
 		dataType: int64
 		formatString: 0
 		lineageTag: cb36816c-344e-4628-9ca8-61b2c43f9c58
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Year of Birth
 
 		annotation SummarizationSetBy = Automatic

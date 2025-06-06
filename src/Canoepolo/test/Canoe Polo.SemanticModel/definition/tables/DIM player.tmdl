@@ -4,6 +4,8 @@ table 'DIM player'
 	column 'Player ID'
 		dataType: string
 		isHidden
+		isKey
+		isAvailableInMdx: false
 		lineageTag: b2db2b9f-5e7a-4232-a697-ac1aee57a1e1
 		summarizeBy: none
 		sourceColumn: Player ID
